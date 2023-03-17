@@ -9,11 +9,12 @@ from .forms import LoginForm
 
 def user_login(request):
     if request.method == 'POST':
-        if form.is_valid():
+        form = LoginForm(request.POST)
+        if form.is_valid(): #checks if valid
             cd = form.cleaned_data
             user = authenticate(request, username=cd['username'], password=cd['password'])
         if user is not None:
-            if user.is_active:
+            if user.is_active: #checks if user account is active
                 login(request, user)
                 return HttpResponse('Authenticated successfully')
             else:
@@ -22,4 +23,5 @@ def user_login(request):
             return HttpResponse("Invalid Login")
     else:
         form = LoginForm()
-    return render(request, 'account/login', {'form': form})
+    return render(request, 'account/login.html', {'form': form})
+    # return HttpResponse("Hello")
