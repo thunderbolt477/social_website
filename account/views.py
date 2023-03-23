@@ -4,8 +4,6 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse
-from .urls import LOGIN_REDIRECT_URL
 
 # Create your views here.
 
@@ -30,6 +28,12 @@ def user_login(request):
     # return HttpResponse("Hello")
     
 
+# @login_required
+# def dashboard(request):
+#     return render(request, 'account/dashboard.html', {'section':'dashboard'})
+
 @login_required
 def dashboard(request):
-    return HttpResponseRedirect(reverse(LOGIN_REDIRECT_URL))
+    return render(request,
+                  'account/dashboard.html',
+                  {'section': 'dashboard'})
